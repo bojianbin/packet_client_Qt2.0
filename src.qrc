@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/sysButton/sys_button_close.png</file>
+        <file>img/sysButton/sys_button_max.png</file>
+        <file>img/sysButton/sys_button_min.png</file>
+        <file>img/sysButton/title_bar_menu.png</file>
+        <file>img/sysButton/SkinButton.png</file>
+        <file>icon/a.png</file>
+        <file>icon/b.png</file>
+        <file>icon/c.png</file>
+        <file>icon/d.png</file>
+        <file>icon/e.png</file>
+        <file>icon/f.png</file>
+        <file>icon/g.png</file>
+        <file>icon/h.png</file>
+        <file>icon/i.png</file>
+        <file>icon/j.png</file>
+        <file>icon/k.png</file>
+        <file>icon/l.png</file>
+        <file>icon/m.png</file>
+        <file>icon/n.png</file>
+        <file>icon/o.png</file>
+        <file>icon/p.png</file>
+        <file>icon/penguintvicon.png</file>
+        <file>icon/penguin.png</file>
+        <file>icon/qt-logo.png</file>
+        <file>icon/penguin3.png</file>
+        <file>icon/b1.jpg</file>
+        <file>icon/b2.jpg</file>
+        <file>icon/b3.jpg</file>
+        <file>icon/b4.jpg</file>
+        <file>icon/b5.jpg</file>
+        <file>icon/b6.jpg</file>
+        <file>icon/b1small.jpg</file>
+        <file>icon/b2small.jpg</file>
+        <file>icon/b3small.jpg</file>
+        <file>icon/b4small.jpg</file>
+        <file>icon/b5small.jpg</file>
+        <file>icon/b6small.jpg</file>
+        <file>icon/b7.jpg</file>
+        <file>icon/b7small.jpg</file>
+        <file>icon/b8.jpg</file>
+        <file>icon/b8small.jpg</file>
+        <file>icon/b9.jpg</file>
+        <file>icon/b9small.jpg</file>
+    </qresource>
+</RCC>
