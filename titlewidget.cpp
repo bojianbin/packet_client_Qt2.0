@@ -21,7 +21,7 @@ titleWidget::titleWidget(QWidget *parent) :
     btnMax=new sysButton("sys_button_max.png",tr("zuida"));
     connect(btnMax,SIGNAL(clicked()),this,SIGNAL(showMax()));
     btnClose=new sysButton("sys_button_close.png",tr("guanbi"));
-    connect(btnClose,SIGNAL(clicked()),qApp,SLOT(quit()));
+    connect(btnClose,SIGNAL(clicked()),parentWidget(),SLOT(close()));
 
     QHBoxLayout *mainLayout=new QHBoxLayout;
     mainLayout->addWidget(versionText,0,Qt::AlignVCenter);

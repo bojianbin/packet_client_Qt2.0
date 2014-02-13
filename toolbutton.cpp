@@ -23,6 +23,7 @@ toolButton::toolButton(QString picName,QString text,QWidget *parent) :
     setBkPalette(0);
     setAutoFillBackground(true);
     setFixedHeight(80);
+    pressed = false;
 }
 
 void toolButton::setBkPalette(int p)
@@ -33,19 +34,24 @@ void toolButton::setBkPalette(int p)
 }
 void toolButton::enterEvent(QEvent *)
 {
+    if(!pressed)
     setBkPalette(100);
 }
 void toolButton::mousePressEvent(QMouseEvent *)
 {
+    if(!pressed)
     setBkPalette(255);
+    //emit myToolClicked();
 }
 void toolButton::mouseReleaseEvent(QMouseEvent *)
 {
-    setBkPalette(100);
+    pressed = true;
+    //setBkPalette(100);
     emit myToolClicked();
 }
 void toolButton::leaveEvent(QEvent *)
 {
+    if(!pressed)
     setBkPalette(0);
 }
 void toolButton::paintEvent(QPaintEvent *)
@@ -58,4 +64,9 @@ void toolButton::paintEvent(QPaintEvent *)
     painter.setBrush(QBrush(Qt::black));
     painter.drawRoundedRect(bitmap.rect(),5,5);
     setMask(bitmap);
+}
+void toolButton::first_bk(){
+
+    pressed = false;
+    setBkPalette(0);
 }

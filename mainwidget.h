@@ -1,7 +1,13 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
-
+//#include<QtGui>
 #include <QtGui/QWidget>
+#include<QMap>
+#include<QEvent>
+class content2;
+class content2_pre;
+class QStackedLayout;
+class toolWidget;
 
 class mainWidget : public QWidget
 {
@@ -15,18 +21,35 @@ protected:
     void closeEvent(QCloseEvent *);
     void paintEvent(QPaintEvent *);
 private:
+
+    QEvent *event;
+    toolWidget *toolW;
     QTimer *time;
     double times;
     QPoint begin;
     QString bkPicName;
     QPoint normalTopLeft;
+
+    content2_pre *con_pre;
+    QStackedLayout *stacked;
+   // QList<content2 *>list;
+
+    QMap<QString,content2*> pic_list;
+    QMap<QString,int>pic_num;
+
 private slots:
+
+    void findconnet(QString ,QString,int);
+    void startconnet(QString,QString,int);
+    void closeconnect(QString,QString,int);
+
     void time_get();
     void get_move(QPoint);
     void showMax();
     void showMin();
     void showSkinWidget();
     void setPicName(QString);
+
 };
 
 #endif // MAINWIDGET_H

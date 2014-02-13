@@ -13,8 +13,9 @@ signals:
     void myToolClicked();
 
 public slots:
-    
+    void first_bk();
 private:
+    bool pressed;
     void setBkPalette(int);
 
 protected:

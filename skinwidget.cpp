@@ -22,7 +22,7 @@ skinWidget::skinWidget(QString picName,QWidget *parent) :bkPicName(picName),
     for(int i=0;i<9;i++)
     {
         QPushButton *btn=new QPushButton;
-       // btn->setFlat(true);
+        btn->setFlat(true);
         QIcon icon(bkPicName[i].left(bkPicName[i].indexOf("."))+"small.jpg");
         btn->setIcon(icon);
         btn->setIconSize(QSize(97,62));

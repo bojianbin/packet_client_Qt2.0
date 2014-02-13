@@ -14,7 +14,10 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QDesktopWidget>
-
+#include"content2/content2.h"
+#include"content2/content2_pre.h"
+#include<QMap>
+#include<QEvent>
 mainWidget::mainWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -29,38 +32,56 @@ mainWidget::mainWidget(QWidget *parent)
     connect(titleW,SIGNAL(showSkin()),this,SLOT(showSkinWidget()));
     connect(titleW,SIGNAL(move(QPoint)),this,SLOT(get_move(QPoint)));
 
-    toolWidget *toolW=new toolWidget;
+    toolW=new toolWidget;
     toolW->setFocus();
     contentWidget *contentW=new contentWidget;
-    statusWidget *statusW=new statusWidget;
 
+    connect(contentW,SIGNAL(startconnect(QString,QString,int)),this,SLOT(startconnet(QString,QString,int)));
+    connect(contentW,SIGNAL(findconnect(QString,QString,int)),this,SLOT(findconnet(QString,QString,int)));
+    connect(contentW,SIGNAL(closeconnect(QString,QString,int)),this,SLOT(closeconnect(QString,QString,int)));
+
+    statusWidget *statusW=new statusWidget;
     QVBoxLayout *mainLayout=new QVBoxLayout;
+    con_pre = new content2_pre;
+
+
+    stacked = new QStackedLayout;
+    stacked->addWidget(contentW);
+    stacked->addWidget(con_pre);
+    stacked->setCurrentIndex(0);
+    connect(toolW,SIGNAL(click_tool(int)),stacked,SLOT(setCurrentIndex(int )));
+
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->addWidget(titleW);
     mainLayout->addWidget(toolW);
-    mainLayout->addWidget(contentW);
+    mainLayout->addLayout(stacked);
     contentW->setContentsMargins(1,5,1,0);
     mainLayout->addWidget(statusW);
 
     setLayout(mainLayout);
-
+    event = new QEvent(QEvent::MouseButtonRelease);
 
 }
 void mainWidget::get_move(QPoint hehe)
 {
     if(hehe.x() == 10000 && hehe.y() == 10000)
-    {begin = pos();return;}
+    {
+        begin = pos();
+        //move(begin);
+        return;
+    }
     move(begin +hehe);
 
 }
 mainWidget::~mainWidget()
 {
-    
+    delete event;
 }
 
 void mainWidget::paintEvent(QPaintEvent *)
-{ begin = pos();
+{
+    begin = pos();
     QBitmap bitmap(this->size());
     bitmap.fill(Qt::color0);
     QPainter painter(&bitmap);
@@ -87,6 +108,7 @@ void mainWidget::showMin()
 {
     showMinimized();
 }
+
 void mainWidget::showMax()
 {
     static bool isMax=false;
@@ -115,6 +137,7 @@ void mainWidget::showSkinWidget()
     skinW->move(this->mapToGlobal(p));
     skinW->show();
 }
+
 void mainWidget::setPicName(QString picName)
 {
     bkPicName=picName;
@@ -125,7 +148,7 @@ void mainWidget::closeEvent(QCloseEvent * e )
     if(times == 1)
     {
 
-        time = new QTimer(this);
+    time = new QTimer(this);
     connect(time,SIGNAL(timeout()),this,SLOT(time_get()));
     time->start(100);}
 
@@ -139,7 +162,72 @@ void mainWidget::time_get()
     times =times -  0.1;
    setWindowOpacity(times);
 
-   if(times <= 0) close();
+   if(times <= 0)
+       close();
 
 
 }
+void mainWidget::findconnet(QString ip_, QString port_, int qq_){
+
+    QString tmp;
+    tmp = ip_ + port_;
+    if(pic_list.contains(tmp)){
+        stacked->removeWidget(stacked->widget(1));
+        stacked->addWidget(pic_list.value(tmp) );
+        qApp->notify((QObject *)(toolW->t2),event);
+    }
+}
+void mainWidget::startconnet(QString ip_, QString port_, int qq_){
+
+    QString tmp ;
+    tmp = ip_ + port_;
+    if(pic_list.contains(tmp)){
+        pic_num[tmp] += 1;
+        stacked->removeWidget(stacked->widget(1));
+        stacked->addWidget(pic_list.value(tmp) );
+
+        qApp->notify((QObject *)(toolW->t2),event);
+
+    }else{
+        content2 * con2 = new content2(ip_,port_,qq_);
+        pic_list.insert(tmp,con2);
+        pic_num.insert(tmp,1);
+
+        stacked->removeWidget(stacked->widget(1));
+        stacked->addWidget(con2 );
+
+        qApp->notify((QObject *)(toolW->t2),event);
+
+    }
+}
+void mainWidget::closeconnect(QString ip_, QString port_, int qq_){
+
+    QString tmp ;
+    tmp = ip_ + port_;
+    if(pic_list.contains(tmp)){
+
+        if(pic_num.value(tmp)== 1){//仅剩这一个连接
+
+            if(pic_list.value(tmp) == stacked->widget(1)){
+
+                stacked->removeWidget(stacked->widget(1));
+                stacked->addWidget(con_pre );
+            }
+            pic_num.remove(tmp);
+            delete pic_list.value(tmp);
+            pic_list.remove(tmp);
+
+        }
+        pic_num[tmp]--;
+    }
+
+}
+
+
+
+
+
+
+
+
+
