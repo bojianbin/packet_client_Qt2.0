@@ -16,7 +16,20 @@ HEADERS += contentwidget.h \
            sysbutton.h \
            titlewidget.h \
            toolbutton.h \
-           toolwidget.h
+           toolwidget.h \
+    first_item.h \
+    second.h \
+    first_item_pre.h \
+show/bo.h \
+show/ffmtool.h \
+show/mythread.h \
+show/pre_main.h \
+show/sock.h \
+show/widget.h \
+content2/content2.h \
+    content2/content2_pre.h
+
+
 SOURCES += contentwidget.cpp \
            main.cpp \
            mainwidget.cpp \
@@ -26,5 +39,17 @@ SOURCES += contentwidget.cpp \
            sysbutton.cpp \
            titlewidget.cpp \
            toolbutton.cpp \
-           toolwidget.cpp
+           toolwidget.cpp \
+    first_item.cpp \
+    second.cpp \
+    first_item_pre.cpp \
+show/ffmtool.cpp \
+show/mythread.cpp \
+show/pre_main.cpp \
+show/sock.cpp \
+show/widget.cpp \
+content2/content2.cpp \
+    content2/content2_pre.cpp
+
 RESOURCES += src.qrc
+LIBS += -L/usr/local/lib -lavdevice -lavfilter -lpostproc -lswresample -lavformat -lavcodec -lva -lXfixes -lXext -lX11 -lasound -lSDL -lx264 -lvpx -lvorbisenc -lvorbis -ltheoraenc -ltheoradec -logg -lopus -lmp3lame -lfdk-aac -lass -lz -lrt -ldl -lswscale -lavutil -lm
