@@ -39,15 +39,17 @@ void toolButton::enterEvent(QEvent *)
 }
 void toolButton::mousePressEvent(QMouseEvent *)
 {
-    if(!pressed)
-    setBkPalette(255);
+    pressed = true;
+   //setBkPalette(255);
     //emit myToolClicked();
 }
 void toolButton::mouseReleaseEvent(QMouseEvent *)
 {
-    pressed = true;
-    //setBkPalette(100);
-    emit myToolClicked();
+    if(pressed){
+        //setBkPalette(100);
+        setBkPalette(255);
+        emit myToolClicked();
+    }
 }
 void toolButton::leaveEvent(QEvent *)
 {
@@ -69,4 +71,8 @@ void toolButton::first_bk(){
 
     pressed = false;
     setBkPalette(0);
+}
+void toolButton::setpressed_true(){
+
+    pressed = true;
 }

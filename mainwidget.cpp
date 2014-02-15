@@ -18,6 +18,7 @@
 #include"content2/content2_pre.h"
 #include<QMap>
 #include<QEvent>
+#include"toolbutton.h"
 mainWidget::mainWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -174,6 +175,7 @@ void mainWidget::findconnet(QString ip_, QString port_, int qq_){
     if(pic_list.contains(tmp)){
         stacked->removeWidget(stacked->widget(1));
         stacked->addWidget(pic_list.value(tmp) );
+        toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
     }
 }
@@ -185,17 +187,18 @@ void mainWidget::startconnet(QString ip_, QString port_, int qq_){
         pic_num[tmp] += 1;
         stacked->removeWidget(stacked->widget(1));
         stacked->addWidget(pic_list.value(tmp) );
-
+        toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
 
     }else{
         content2 * con2 = new content2(ip_,port_,qq_);
+        con2->pic_ptr()->addparent(con2);
         pic_list.insert(tmp,con2);
         pic_num.insert(tmp,1);
 
         stacked->removeWidget(stacked->widget(1));
         stacked->addWidget(con2 );
-
+        toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
 
     }

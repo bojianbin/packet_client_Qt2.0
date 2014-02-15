@@ -7,11 +7,12 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include<cmath>
-
+#include<QDate>
 titleWidget::titleWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QLabel *versionText=new QLabel(tr("2013-06-16"));
+
+    QLabel *versionText=new QLabel(QDate::currentDate().toString());
 
     btnSkin=new myPushButton("SkinButton.png",tr("huanfu"));
     connect(btnSkin,SIGNAL(clicked()),this,SIGNAL(showSkin()));

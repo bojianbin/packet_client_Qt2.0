@@ -8,7 +8,7 @@ class toolButton : public QWidget
     Q_OBJECT
 public:
     explicit toolButton(QString picName,QString text,QWidget *parent = 0);
-    
+    void setpressed_true();
 signals:
     void myToolClicked();
 

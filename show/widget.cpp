@@ -1,6 +1,7 @@
 #include "widget.h"
 #include"bo.h"
 #include"mythread.h"
+#include"content2/content2.h"
 pic_show::pic_show( QWidget *parent,QString ip,QString port)
     : QWidget(parent)
 {
@@ -119,12 +120,24 @@ QSize pic_show::sizeHint() const{
 }
 void pic_show::mouseDoubleClickEvent(QMouseEvent *){
 
-    if(!fullscreen){
+   if(!fullscreen){
+
+        setParent(0);
         showFullScreen();
         fullscreen = true;
     }
     else{
-        showNormal();
+
         fullscreen = false;
+        setParent(parent_);
+        show();
+        QEvent *e = new QEvent(QEvent::Resize);
+        qApp->notify(parent_,e);
+        delete e;
     }
+
+}
+void pic_show::addparent(content2 * parent){
+
+    parent_ = parent;
 }

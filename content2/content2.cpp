@@ -26,3 +26,6 @@ void content2::resizeEvent(QResizeEvent *){
     picture->move( width()/2 - picture->width()/2,0 );
 
 }
+pic_show * content2::pic_ptr(){
+    return picture;
+}
