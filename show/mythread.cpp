@@ -85,7 +85,7 @@ void mythread::run(){
 
         while(1){
             stop_lock.lock();
-            if(stop_thread == true){//线程关闭
+END:            if(stop_thread == true){//线程关闭
 
                 codec_close(needs.bit_rate);
                 ready_lock.lock();
@@ -133,8 +133,10 @@ void mythread::run(){
             tv.tv_usec = 0;
             setsockopt(sockfd,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
             n = recvfrom(sockfd,BUF,1000,0,NULL,NULL);
-            if(n < 0 )
+            if(n < 0 ){
                 stopp();
+		goto END;
+		}
 
             key = protocol_handle(BUF);
 
