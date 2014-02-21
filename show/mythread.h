@@ -15,7 +15,8 @@ public:
 
 public slots:
     void heart_beat();//100ms的定时
-
+signals:
+    void showmess(QString);
 protected:
     void run();
 public:
