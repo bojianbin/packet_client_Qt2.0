@@ -10,6 +10,8 @@ class pic_show : public QWidget
 {
     Q_OBJECT
     
+signals:
+    void showmessage(QString);
 public:
     QSize sizeHint() const;
     pic_show(QWidget *parent = 0,QString = "",QString = "" );

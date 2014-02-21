@@ -7,7 +7,8 @@
 class content2 : public QWidget
 {
     Q_OBJECT
-    
+signals:
+    void showmess(QString);
 public:
     content2(QString,QString,int, QWidget *parent = 0);
     ~content2();

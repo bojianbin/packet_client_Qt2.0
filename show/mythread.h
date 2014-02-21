@@ -19,6 +19,7 @@ signals:
     void showmess(QString);
 protected:
     void run();
+    void showmessage(QString);
 public:
     int sockfd;
     char *ip;

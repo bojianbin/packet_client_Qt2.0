@@ -12,10 +12,12 @@ content2::content2(QString ip,QString port,int pp, QWidget *parent)
 
     picture = new pic_show(this,ip,port);
 
+    connect(picture,SIGNAL(showmessage(QString)),this,SIGNAL(showmess(QString)));
 }
 
 content2::~content2()
 {
+
     
 }
 

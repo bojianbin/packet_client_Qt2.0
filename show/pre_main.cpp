@@ -127,6 +127,7 @@ int chips_to_buf(struct chip_queue * que, char *buf,int *total){
         memcpy(buf+index,tmp.buf,tmp.size);
         size += tmp.size;
         index += tmp.size;
+        free(tmp.buf);
     }
     printf("\n");
     *total = size;
@@ -134,7 +135,15 @@ int chips_to_buf(struct chip_queue * que, char *buf,int *total){
     return 0;
 
 }
+void chip_destroy(chip_queue * que){
 
+    struct buf_chip tmp;
+    while( !chip_empty(que) ){
+
+        chip_pop(que,&tmp);
+        free(tmp.buf);
+    }
+}
 uint8_t protocol_handle(char * ch){
 
     uint8_t pp;

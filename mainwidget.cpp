@@ -19,6 +19,11 @@
 #include<QMap>
 #include<QEvent>
 #include"toolbutton.h"
+/*
+ *contentWidget 是第一个
+ *content2_pre 是第二个（未有连接时的情况）
+ *content2 是第二个（有连接的情况），有几个不同的连接就有几个content2
+ **/
 mainWidget::mainWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -45,10 +50,16 @@ mainWidget::mainWidget(QWidget *parent)
     QVBoxLayout *mainLayout=new QVBoxLayout;
     con_pre = new content2_pre;
 
+    browser = new QTextBrowser;
+    browser->setStyleSheet("QTextBrowser{background-color:black}");
+    browser->setTextColor(Qt::white);
+
+
 
     stacked = new QStackedLayout;
     stacked->addWidget(contentW);
     stacked->addWidget(con_pre);
+    stacked->addWidget(browser);
     stacked->setCurrentIndex(0);
     connect(toolW,SIGNAL(click_tool(int)),stacked,SLOT(setCurrentIndex(int )));
 
@@ -174,7 +185,7 @@ void mainWidget::findconnet(QString ip_, QString port_, int qq_){
     tmp = ip_ + port_;
     if(pic_list.contains(tmp)){
         stacked->removeWidget(stacked->widget(1));
-        stacked->addWidget(pic_list.value(tmp) );
+        stacked->insertWidget(1,pic_list.value(tmp) );
         toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
     }
@@ -186,18 +197,19 @@ void mainWidget::startconnet(QString ip_, QString port_, int qq_){
     if(pic_list.contains(tmp)){
         pic_num[tmp] += 1;
         stacked->removeWidget(stacked->widget(1));
-        stacked->addWidget(pic_list.value(tmp) );
+        stacked->insertWidget(1,pic_list.value(tmp) );
         toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
 
     }else{
         content2 * con2 = new content2(ip_,port_,qq_);
+        connect(con2,SIGNAL(showmess(QString)),this,SLOT(showmess(QString)));
         con2->pic_ptr()->addparent(con2);
         pic_list.insert(tmp,con2);
         pic_num.insert(tmp,1);
 
         stacked->removeWidget(stacked->widget(1));
-        stacked->addWidget(con2 );
+        stacked->insertWidget(1,con2 );
         toolW->t2->setpressed_true();
         qApp->notify((QObject *)(toolW->t2),event);
 
@@ -211,14 +223,17 @@ void mainWidget::closeconnect(QString ip_, QString port_, int qq_){
 
         if(pic_num.value(tmp)== 1){//仅剩这一个连接
 
+
             if(pic_list.value(tmp) == stacked->widget(1)){
 
                 stacked->removeWidget(stacked->widget(1));
-                stacked->addWidget(con_pre );
+                stacked->insertWidget(1,con_pre );
             }
-            pic_num.remove(tmp);
+            showmess( ip_ + "::"+port_ +"  " + "closed");
             delete pic_list.value(tmp);
+            pic_num.remove(tmp);
             pic_list.remove(tmp);
+
 
         }
         pic_num[tmp]--;
@@ -226,7 +241,14 @@ void mainWidget::closeconnect(QString ip_, QString port_, int qq_){
 
 }
 
+void mainWidget::showmess(QString str){
 
+    QString time;
+    time = QTime::currentTime().toString();
+    QString show = time + "; "+str;
+
+    browser->append(show);
+}
 
 
 

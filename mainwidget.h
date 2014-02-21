@@ -4,6 +4,7 @@
 #include <QtGui/QWidget>
 #include<QMap>
 #include<QEvent>
+#include<QTextBrowser>
 class content2;
 class content2_pre;
 class QStackedLayout;
@@ -30,6 +31,7 @@ private:
     QString bkPicName;
     QPoint normalTopLeft;
 
+    QTextBrowser *browser;
     content2_pre *con_pre;
     QStackedLayout *stacked;
    // QList<content2 *>list;
@@ -50,6 +52,7 @@ private slots:
     void showSkinWidget();
     void setPicName(QString);
 
+    void showmess(QString);
 };
 
 #endif // MAINWIDGET_H

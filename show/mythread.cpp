@@ -45,7 +45,12 @@ void mythread::stopp(){
     stop_thread = true;
     ready_lock.unlock();
 }
-
+void mythread::showmessage(QString str){
+    QString pre;
+    pre =  QString(ip) + "::" +QString::number(port) + "  ";
+    pre = pre + str;
+    emit showmess(pre);
+}
 void mythread::run(){
 
     char BUF[1000];
@@ -76,7 +81,9 @@ void mythread::run(){
 
 
     if(start_connet(sockfd,500000) <0)
-        err_quit("start_connect error\n");
+        //err_quit("start_connect error\n");
+        showmessage("start_connect error");
+    else showmessage("connect successfully");
     time_lock.lock();
     ask = 1;//设置重新发送时间
     time_lock.unlock();
@@ -85,9 +92,13 @@ void mythread::run(){
 
 
     while(1){
+
         stop_lock.lock();
 END:            if(stop_thread == true){//线程关闭
 
+            //err_print("closed");
+            chip_destroy(&QUEUE);
+            showmessage("closed");
             codec_close(needs.bit_rate);
             ready_lock.lock();
             free(ready);
@@ -106,10 +117,12 @@ END:            if(stop_thread == true){//线程关闭
             ch = 0x80;
             time_lock.lock();
             if(heart == 0){
-                err_print("send heart beat signal\n");
+                //err_print("send heart beat signal\n");
+                showmessage("send heart beat signal");
                 j = sendto(sockfd,&ch,1,0,NULL,0);
                 if(j < 0 )
-                    err_print("heart_beat error\n");
+                    //err_print("heart_beat error\n");
+                    showmessage("heart_beat error");
                 heart = 50;
             }
             time_lock.unlock();
@@ -118,7 +131,8 @@ END:            if(stop_thread == true){//线程关闭
         {//检查是否需要重新发送“请求报文”
             time_lock.lock();
             if(ask == 0){
-                err_print("请求报文超时，并重新发送\n");
+                //err_print("请求报文超时，并重新发送\n");
+                showmessage("请求报文超时，并重新发送");
                 start_connet(sockfd,30000);
                 ask = 1;
             }
@@ -142,7 +156,7 @@ END:            if(stop_thread == true){//线程关闭
         key = protocol_handle(BUF);
 
         if(  key == 1){//数据帧
-            err_print("数据帧\n");
+            //err_print("数据帧\n");
             char *ch;
             /*     if( !chip_empty(&QUEUE) && (htonl( *(uint32_t *)(BUF+1) ) != chip_top_time(&QUEUE) ) ){
 
@@ -167,6 +181,7 @@ END:            if(stop_thread == true){//线程关闭
                 //队列中有上一帧数据的情况下收到了下一帧的数据，此时显示上一帧
                 //并存入下一帧的第一条报文
                 err_print("完整的数据帧\n");
+                // emit showmess("完整的数据帧");
 
                 if(tmpchip.time < NOWFRAME && tmpchip.time != 0)
                     continue;
@@ -185,7 +200,7 @@ END:            if(stop_thread == true){//线程关闭
                 NOWFRAME = tmpchip.time;
             }
             else{
-                err_print("else\n");
+
                 chip_push(&QUEUE,tmpchip);
                 NOWFRAME = tmpchip.time;
             }
@@ -209,7 +224,8 @@ END:            if(stop_thread == true){//线程关闭
         }//数据帧
         if(key == 2){//服务器应答
             int old;
-            err_print("收到“应答报文”\n");
+            //err_print("收到“应答报文”\n");
+            showmessage("收到应答报文");
             time_lock.lock();
             ask = -1;//收到服务器回应，则取消“要求”报文重发
             time_lock.unlock();
@@ -221,6 +237,9 @@ END:            if(stop_thread == true){//线程关闭
             needs.gopsize= ntohl( *(int *)(BUF+13));
             needs.max_b_frames= ntohl( *(int *)(BUF+17));
             needs.bit_rate=ntohl( *(int *)(BUF +25));
+            showmessage(QString("width:%1 height %2 fps:%3 gopsize:%4 max_b_frames:%5 bit_rate:%6")\
+                        .arg(needs.width).arg(needs.height).arg(needs.fps).arg(needs.gopsize).arg(needs.max_b_frames)\
+                        .arg(needs.bit_rate));
 
 
             //if( old != needs.bit_rate)

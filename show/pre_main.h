@@ -39,6 +39,7 @@ int chip_top (struct chip_queue *,struct buf_chip *);
 uint32_t chip_top_time(struct chip_queue *);
 char chip_empty(struct chip_queue *);
 int chip_entity(struct chip_queue * );
+void chip_destroy(struct chip_queue *);
 
 int chips_to_buf(struct chip_queue *,char*buf,int *);
 uint8_t protocol_handle(char *);

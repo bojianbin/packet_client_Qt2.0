@@ -26,17 +26,18 @@ pic_show::pic_show( QWidget *parent,QString ip,QString port)
         thread1.start();
     }
 
+    connect(&thread1,SIGNAL(showmess(QString)),this,SIGNAL(showmessage(QString)));
 
 }
 
 pic_show::~pic_show()
 {
+
     free(image_buf);
     if(thread1.isRunning())
        thread1.stopp();
-    thread1.wait();
 
-    
+    thread1.wait();
 }
 void pic_show::setprot(QString ip , QString port){
 
