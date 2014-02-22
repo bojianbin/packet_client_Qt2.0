@@ -135,10 +135,16 @@ void codec_close(int bit_rate){//关闭不用的AVCodecContext *
     }
     }//switch
 
-
+    av_frame_free(&frame);
+    av_free(frame);
     av_frame_free(&frameout);
+    av_free(frameout);
     avcodec_flush_buffers(c[sp]);
-    avcodec_close(c[sp]);
+    //avcodec_close(c[sp]);
+    for(size_t i = 0;i<6;i++){
+        avcodec_close(c[i]);
+        av_free(c[i]);
+    }
     sws_freeContext(sws);
 }
 void  SaveFrame(u_char *p,int width, int height) {

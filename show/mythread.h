@@ -21,6 +21,9 @@ protected:
     void run();
     void showmessage(QString);
 public:
+    char *BUF;
+    char *PACK_BUF;
+
     int sockfd;
     char *ip;
     int port;
@@ -39,6 +42,9 @@ public:
     int ask;//客户端"请求报文"重发的计时
     int resend;//”重新发送“报文的计时
     QMutex time_lock;
+
+    bool getvideo;
+    bool getvideo_done;
 };
 
 

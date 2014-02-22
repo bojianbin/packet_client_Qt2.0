@@ -53,14 +53,15 @@ void mythread::showmessage(QString str){
 }
 void mythread::run(){
 
-    char BUF[1000];
-    char PACK_BUF[100000];
+
     int PACK_SIZE;
     struct chip_queue QUEUE;
     struct codec_need needs = {640,480,10,5,0,30000};
     struct sockaddr_in servaddr;
 
 
+    BUF = (char *)malloc(1000);
+    PACK_BUF = (char *)malloc(100000);
     uint32_t NOWFRAME;//当前的frame号
     /////////////////////////////各个定时结果
 
@@ -89,13 +90,16 @@ void mythread::run(){
     time_lock.unlock();
 
     ready = (uint8_t *)malloc(640*480*3);
-
+    getvideo = false;
+    getvideo_done = false;
 
     while(1){
 
         stop_lock.lock();
 END:            if(stop_thread == true){//线程关闭
 
+            free(BUF);
+            free(PACK_BUF);
             //err_print("closed");
             chip_destroy(&QUEUE);
             showmessage("closed");

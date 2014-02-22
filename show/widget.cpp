@@ -32,7 +32,7 @@ pic_show::pic_show( QWidget *parent,QString ip,QString port)
 
 pic_show::~pic_show()
 {
-
+    delete image_;
     free(image_buf);
     if(thread1.isRunning())
        thread1.stopp();
