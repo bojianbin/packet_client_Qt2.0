@@ -51,6 +51,12 @@ void mythread::showmessage(QString str){
     pre = pre + str;
     emit showmess(pre);
 }
+void mythread::save_video(QString str){
+
+}
+void mythread::save_tail(){
+
+}
 void mythread::run(){
 
 
