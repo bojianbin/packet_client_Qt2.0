@@ -43,8 +43,13 @@ public:
     int resend;//”重新发送“报文的计时
     QMutex time_lock;
 
+    //关于录制的一些变量和函数
+    QMutex video_lock;
     bool getvideo;
-    bool getvideo_done;
+    bool needtail;
+    QString filename;
+    void save_video(QString);
+    void save_tail();
 };
 
 

@@ -91,7 +91,7 @@ void mythread::run(){
 
     ready = (uint8_t *)malloc(640*480*3);
     getvideo = false;
-    getvideo_done = false;
+    needtail = false;
 
     while(1){
 
@@ -195,6 +195,14 @@ END:            if(stop_thread == true){//线程关闭
                 }
 
                 chips_to_buf(&QUEUE,PACK_BUF,&PACK_SIZE);
+                {//录制
+                    video_lock.lock();
+                    if(getvideo == true && needtail == false)
+                        save_video(filename);
+                    if(getvideo == false && needtail == true)
+                        save_tail();
+                    video_lock.unlock();
+                }//录制
                 ready_lock.lock();
                 to_image(PACK_BUF,PACK_SIZE,&needs,&ready,&size);
                 ready_to_go = true;
