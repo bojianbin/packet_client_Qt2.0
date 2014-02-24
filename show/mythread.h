@@ -23,7 +23,15 @@ protected:
 public:
     char *BUF;
     char *PACK_BUF;
+    //参数
+    int bit_rate_;
+    int gopsize_;
+    int max_b_frames_;
+    int fps_;
+    int width_;
+    int height_;
 
+    //
     int sockfd;
     char *ip;
     int port;
@@ -43,13 +51,6 @@ public:
     int resend;//”重新发送“报文的计时
     QMutex time_lock;
 
-    //关于录制的一些变量和函数
-    QMutex video_lock;
-    bool getvideo;
-    bool needtail;
-    QString filename;
-    void save_video(QString);
-    void save_tail();
 };
 
 

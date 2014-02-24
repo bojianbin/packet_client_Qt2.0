@@ -51,12 +51,7 @@ void mythread::showmessage(QString str){
     pre = pre + str;
     emit showmess(pre);
 }
-void mythread::save_video(QString str){
 
-}
-void mythread::save_tail(){
-
-}
 void mythread::run(){
 
 
@@ -72,7 +67,6 @@ void mythread::run(){
     /////////////////////////////各个定时结果
 
     //////////////////////////////
-
 
 
     servaddr.sin_family = AF_INET;
@@ -96,8 +90,8 @@ void mythread::run(){
     time_lock.unlock();
 
     ready = (uint8_t *)malloc(640*480*3);
-    getvideo = false;
-    needtail = false;
+
+
 
     while(1){
 
@@ -115,7 +109,6 @@ END:            if(stop_thread == true){//线程关闭
             free(ip);
             ready_lock.unlock();
             stop_lock.unlock();
-
             break;
         }
         stop_lock.unlock();
@@ -201,14 +194,7 @@ END:            if(stop_thread == true){//线程关闭
                 }
 
                 chips_to_buf(&QUEUE,PACK_BUF,&PACK_SIZE);
-                {//录制
-                    video_lock.lock();
-                    if(getvideo == true && needtail == false)
-                        save_video(filename);
-                    if(getvideo == false && needtail == true)
-                        save_tail();
-                    video_lock.unlock();
-                }//录制
+
                 ready_lock.lock();
                 to_image(PACK_BUF,PACK_SIZE,&needs,&ready,&size);
                 ready_to_go = true;
@@ -258,11 +244,17 @@ END:            if(stop_thread == true){//线程关闭
             showmessage(QString("width:%1 height %2 fps:%3 gopsize:%4 max_b_frames:%5 bit_rate:%6")\
                         .arg(needs.width).arg(needs.height).arg(needs.fps).arg(needs.gopsize).arg(needs.max_b_frames)\
                         .arg(needs.bit_rate));
-
+            {
+                bit_rate_ = needs.bit_rate;
+                gopsize_ = needs.gopsize;
+                max_b_frames_ = needs.max_b_frames;
+                fps_ = needs.fps;
+                width_ = needs.width;
+                height_ = needs.height;
+            }
 
             //if( old != needs.bit_rate)
             //  codec_close(needs.bit_rate);
-
 
         }
 
@@ -272,3 +264,4 @@ END:            if(stop_thread == true){//线程关闭
 
 
 }
+

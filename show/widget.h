@@ -18,11 +18,41 @@ public:
    // pic_show(QWidget * = 0);
     ~pic_show();
     void addparent(content2 *);
+
+
+    ////////////////录制
+
+    QString filedir;
+    QString absolutefilename;
+    char *file_;
+
+    uint8_t *videobuf;
+
+    AVFrame *tosave;//RGB
+    AVFrame *toencode;//420p
+    SwsContext *sws;
+
+    int64_t pts_;
+    QMutex video_lock;
+
+    bool getvideo;
+    AVFormatContext *oc;
+    AVOutputFormat *fmt;
+    AVStream *video_st;
+    double video_pts;
+    AVCodec *video_codec;
+    /////////////////
+
 public slots:
     void setprot(QString ,QString);
     void check_run();
     void pre_heart_beat();
 
+    //录制
+    void startvideo();
+    void invideo();
+    void endvideo();
+    //
 private slots:
 protected:
     void paintEvent(QPaintEvent *);

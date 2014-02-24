@@ -32,6 +32,7 @@ private:
     QPoint normalTopLeft;
 
     QTextBrowser *browser;
+    QTextBrowser *video_browser;
     content2_pre *con_pre;
     QStackedLayout *stacked;
    // QList<content2 *>list;
@@ -39,7 +40,15 @@ private:
     QMap<QString,content2*> pic_list;
     QMap<QString,int>pic_num;
 
+    //录制
+    QList<QString>video_list;//正在录制中
+
 private slots:
+
+    //录制
+    void recv_startvideo(QString);
+    void recv_endvideo(QString);
+
 
     void findconnet(QString ,QString,int);
     void startconnet(QString,QString,int);

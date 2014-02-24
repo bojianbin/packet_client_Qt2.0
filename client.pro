@@ -18,7 +18,6 @@ HEADERS += contentwidget.h \
            toolbutton.h \
            toolwidget.h \
     first_item.h \
-    second.h \
     first_item_pre.h \
 show/bo.h \
 show/ffmtool.h \
@@ -41,7 +40,6 @@ SOURCES += contentwidget.cpp \
            toolbutton.cpp \
            toolwidget.cpp \
     first_item.cpp \
-    second.cpp \
     first_item_pre.cpp \
 show/ffmtool.cpp \
 show/mythread.cpp \

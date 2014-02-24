@@ -53,13 +53,16 @@ mainWidget::mainWidget(QWidget *parent)
     browser = new QTextBrowser;
     browser->setStyleSheet("QTextBrowser{background-color:black}");
     browser->setTextColor(Qt::white);
-
-
+    video_browser = new QTextBrowser;
+    video_browser->setStyleSheet("QTextBrowser{background-color:black}");
+    video_browser->setTextColor(Qt::white);
+    video_browser->append("没有录制中的设备");
 
     stacked = new QStackedLayout;
     stacked->addWidget(contentW);
     stacked->addWidget(con_pre);
     stacked->addWidget(browser);
+    stacked->addWidget(video_browser);
     stacked->setCurrentIndex(0);
     connect(toolW,SIGNAL(click_tool(int)),stacked,SLOT(setCurrentIndex(int )));
 
@@ -204,6 +207,9 @@ void mainWidget::startconnet(QString ip_, QString port_, int qq_){
     }else{
         content2 * con2 = new content2(ip_,port_,qq_);
         connect(con2,SIGNAL(showmess(QString)),this,SLOT(showmess(QString)));
+        connect(con2,SIGNAL(startvideo(QString)),this,SLOT(recv_startvideo(QString)));
+        connect(con2,SIGNAL(endvideo(QString)),this,SLOT(recv_endvideo(QString)));
+
         con2->pic_ptr()->addparent(con2);
         pic_list.insert(tmp,con2);
         pic_num.insert(tmp,1);
@@ -250,7 +256,36 @@ void mainWidget::showmess(QString str){
     browser->append(show);
 }
 
+void mainWidget::recv_startvideo(QString str){
 
+    if(!video_list.contains(str)){
+        video_list.append(str);
+        video_browser->append("============================");
+        video_browser->append( QTime::currentTime().toString() +": " + \
+                               QString(str) + "开始录制");
+        video_browser->append("现在录制的设备有： ");
+        for(size_t i = 0;i < video_list.count();i++){
+            video_browser->append(video_list[i]);
+            video_browser->append(" ");
+        }
+        //video_browser->append("============================");
+    }
+}
+void mainWidget::recv_endvideo(QString str){
+
+    if(video_list.contains(str)){
+        video_browser->append("============================");
+        video_browser->append(QTime::currentTime().toString() +": " + \
+                              QString(str) + "停止录制");
+        video_list.removeOne(str);
+        video_browser->append("现在正在录制的设备有： ");
+        for(size_t i = 0;i < video_list.count();i++){
+            video_browser->append(video_list[i]);
+            video_browser->append(" ");
+        }
+       // video_browser->append("============================");
+    }
+}
 
 
 

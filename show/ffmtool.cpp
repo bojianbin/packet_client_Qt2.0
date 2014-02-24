@@ -10,7 +10,6 @@ AVPacket pack;
 AVPicture pict;
 struct SwsContext *sws;
 
-
 const int i_to_speed[6] = {1800000,1000000,500000,100000,50000,30000};
 
 int av_open_codec(){
@@ -52,11 +51,12 @@ int av_open_codec(){
             NULL,
             NULL);
 
-
 }
 
 int to_image(char * buf,int size,struct codec_need * needs,uint8_t ** data_,int *size_)
 {
+
+
 
 
     int sp= 0;
@@ -94,7 +94,6 @@ int to_image(char * buf,int size,struct codec_need * needs,uint8_t ** data_,int 
 
     if(framefinished)
     {
-
         sws_scale(
                     sws,
                     (uint8_t const * const *)frame->data,
@@ -112,6 +111,10 @@ int to_image(char * buf,int size,struct codec_need * needs,uint8_t ** data_,int 
         bzero(*data_,*size_);
         memcpy(*data_,frameout->data[0],*size_);
         //SaveFrame(*data_,640,480);
+
+        /////
+
+        //////
 
     }//if framefinished
 
@@ -146,6 +149,7 @@ void codec_close(int bit_rate){//关闭不用的AVCodecContext *
         av_free(c[i]);
     }
     sws_freeContext(sws);
+
 }
 void  SaveFrame(u_char *p,int width, int height) {
   FILE *pFile;
