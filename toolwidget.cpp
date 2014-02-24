@@ -13,7 +13,7 @@ toolWidget::toolWidget(QWidget *parent):
     list.append(t2);
     toolButton *t3=new toolButton(":/icon/e.png",tr("信息浏览"));
     list.append(t3);
-    toolButton *t4=new toolButton(":/icon/h.png",tr("保存信息"));
+    toolButton *t4=new toolButton(":/icon/h.png",tr("录制信息"));
     list.append(t4);
     toolButton *t5=new toolButton(":/icon/a.png",tr("检索查询"));
     list.append(t5);
