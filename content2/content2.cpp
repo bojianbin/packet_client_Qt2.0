@@ -14,9 +14,14 @@ content2::content2(QString ip,QString port,int pp, QWidget *parent)
     button->setCheckable(true);
     connect(button,SIGNAL(toggled(bool)),this,SLOT(button_text(bool)));
 
+    button2 = new QPushButton(this);
+    button2->setText("屏幕截图");
+
+
     picture = new pic_show(this,ip,port);
     button->move( width()-10-button->width(),10 );
     connect(picture,SIGNAL(showmessage(QString)),this,SIGNAL(showmess(QString)));
+    connect(button2,SIGNAL(clicked()),picture,SLOT(capture()));
 }
 
 content2::~content2()
@@ -31,6 +36,8 @@ void content2::resizeEvent(QResizeEvent *){
     picture->resize( height() *640 /480,height());
     picture->move( width()/2 - picture->width()/2,0 );
     button->move( width()-10-button->width(),10 );
+
+    button2->move(button->x(),button->y()+button->height()+10);
 }
 pic_show * content2::pic_ptr(){
     return picture;

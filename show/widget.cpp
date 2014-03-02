@@ -326,3 +326,21 @@ void pic_show::endvideo(){
     av_free(toencode);
     free(file_);
 }
+void pic_show::capture(){
+
+    QDir dir(QDir::homePath());
+    QDir dir2(QDir::homePath() + "/"+filedir);
+    if(!dir2.exists())
+       dir.mkdir(filedir);
+    QString kk = QDate::currentDate().toString("yyyyMMdd") + "V"+QTime::currentTime().toString("hhmmss");
+    QString kk2 = dir2.absolutePath() + "/" + ip_ + "V" + port_ + "V"+ kk +".jpeg";
+
+    bool ret = image_->save(kk2,"JPEG");
+    if(ret)
+        emit showmessage("截取图片成功");
+    else
+        emit showmessage("截取图片失败");
+}
+
+
+

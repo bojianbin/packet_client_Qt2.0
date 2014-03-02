@@ -52,6 +52,7 @@ public slots:
     void startvideo();
     void invideo();
     void endvideo();
+    void capture();
     //
 private slots:
 protected:

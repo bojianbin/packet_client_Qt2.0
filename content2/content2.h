@@ -11,6 +11,7 @@ signals:
     void showmess(QString);
     void startvideo(QString);
     void endvideo(QString);
+    void capture();
 public:
     content2(QString,QString,int, QWidget *parent = 0);
     ~content2();
@@ -22,6 +23,7 @@ private:
     QString ip_;
     QString port_;
     QPushButton * button;
+    QPushButton *button2;
     pic_show *picture;
 private slots:
     void button_text(bool);
