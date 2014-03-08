@@ -1,0 +1,4 @@
+一个Qt客户端，运行前需安装FFMpeg，Qt库。
+运行方式:
+   make
+   ./client
