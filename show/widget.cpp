@@ -154,8 +154,8 @@ void pic_show::startvideo(){
 
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     QTextCodec::setCodecForLocale(codec);
-    QTextCodec::setCodecForCStrings(codec);
-    QTextCodec::setCodecForTr(codec);
+    //QTextCodec::setCodecForCStrings(codec);
+    //QTextCodec::setCodecForTr(codec);
 
     videobuf = (uint8_t *)malloc(640 * 480 *3);
 
@@ -167,13 +167,13 @@ void pic_show::startvideo(){
     absolutefilename = dir2.absolutePath() + "/" + ip_ + "V" + port_ + "V"+ kk +".mkv";
     char *name = (char *)malloc(100);
     bzero(name,100);
-    strcat(name,dir2.absolutePath().toAscii().data());
+    strcat(name,dir2.absolutePath().toLatin1().data());
     strcat(name,"/");
-    strcat(name,ip_.toAscii().data());
+    strcat(name,ip_.toLatin1().data());
     strcat(name,"V");
-    strcat(name,port_.toAscii().data());
+    strcat(name,port_.toLatin1().data());
     strcat(name,"V");
-    strcat(name,kk.toAscii().data());
+    strcat(name,kk.toLatin1().data());
     strcat(name,".mkv");
 
     file_ = name;

@@ -1,7 +1,7 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 //#include<QtGui>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include<QMap>
 #include<QEvent>
 #include<QTextBrowser>

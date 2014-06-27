@@ -1,7 +1,7 @@
 #ifndef FIRST_ITEM_PRE_H
 #define FIRST_ITEM_PRE_H
 #include<QWidget>
-#include<QtGui>
+#include<QtWidgets>
 class item_pre:public QDialog
 {
     Q_OBJECT

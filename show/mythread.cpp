@@ -24,7 +24,7 @@ mythread::mythread(){
 
 void mythread::setprot(QString ip_ , QString port_){
 
-    memcpy(ip,ip_.toAscii().data(),ip_.toAscii().size()+1);
+    memcpy(ip,ip_.toLatin1().data(),ip_.toLatin1().size()+1);
     port =  port_.toInt();
     printf("%s\n",ip);
     printf("%d\n",port);

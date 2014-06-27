@@ -2,7 +2,7 @@
 #define FIRST_ITEM_H
 
 #include <QWidget>
-#include<QtGui>
+#include <QtWidgets>
 
 class Widget : public QWidget
 {

@@ -3,9 +3,10 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = out
 DEPENDPATH += .
 INCLUDEPATH += .
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # Input
 HEADERS += contentwidget.h \
@@ -50,4 +51,4 @@ content2/content2.cpp \
     content2/content2_pre.cpp
 
 RESOURCES += src.qrc
-LIBS += -L/usr/local/lib -lavdevice -lavfilter -lpostproc -lswresample -lavformat -lavcodec -lva -lXfixes -lXext -lX11 -lasound -lSDL -lx264 -lvpx -lvorbisenc -lvorbis -ltheoraenc -ltheoradec -logg -lopus -lmp3lame -lfdk-aac -lass -lz -lrt -ldl -lswscale -lavutil -lm
+LIBS += -pthread -L/usr/local/lib -lavformat -lavcodec -lva -lXfixes -lXext -lX11 -lasound -lx264 -lvpx -lvorbisenc -lvorbis -ltheoraenc -ltheoradec -logg -lopus -lmp3lame -lfreetype -lfdk-aac -lass -lz -ldl -lswresample -lswscale -lavutil -lm -lSDL

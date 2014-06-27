@@ -1,5 +1,5 @@
 #include "content2.h"
-#include<QtGui>
+#include<QtWidgets>
 #include"../show/widget.h"
 
 content2::content2(QString ip,QString port,int pp, QWidget *parent)

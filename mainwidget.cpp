@@ -46,10 +46,10 @@ mainWidget::mainWidget(QWidget *parent)
     connect(contentW,SIGNAL(findconnect(QString,QString,int)),this,SLOT(findconnet(QString,QString,int)));
     connect(contentW,SIGNAL(closeconnect(QString,QString,int)),this,SLOT(closeconnect(QString,QString,int)));
 
+
     statusWidget *statusW=new statusWidget;
     QVBoxLayout *mainLayout=new QVBoxLayout;
     con_pre = new content2_pre;
-
     browser = new QTextBrowser;
     browser->setStyleSheet("QTextBrowser{background-color:black}");
     browser->setTextColor(Qt::white);

@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include "mainwidget.h"
 #include <QTextCodec>
 #include"statuswidget.h"
@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QTextCodec *codec = QTextCodec::codecForName("utf-8");
     QTextCodec::setCodecForLocale(codec);
-    QTextCodec::setCodecForCStrings(codec);
-    QTextCodec::setCodecForTr(codec);
+    //QTextCodec::setCodecForCStrings(codec);
+    //QTextCodec::setCodecForTr(codec);
 
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
